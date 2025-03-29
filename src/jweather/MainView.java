@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
+    MainPanel mainPanel;
 
     // Constructor
     public MainView(String title) {
@@ -16,6 +17,10 @@ public class MainView extends JFrame {
         this.setPreferredSize(new Dimension(600, 400));
         // Set layout manager of frame
         this.setLayout(new BorderLayout());
+
+        // Add MainPanel to gui
+        mainPanel = new MainPanel();
+        this.add(mainPanel, BorderLayout.CENTER);
 
         // Display the window
         this.setVisible(true);
