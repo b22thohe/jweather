@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class MainView extends JFrame {
     MainPanel mainPanel;
+    SearchPanel searchPanel;
 
     // Constructor
     public MainView(String title) {
@@ -18,9 +19,11 @@ public class MainView extends JFrame {
         // Set layout manager of frame
         this.setLayout(new BorderLayout());
 
-        // Add MainPanel to gui
+        // Add panels to gui
         mainPanel = new MainPanel();
         this.add(mainPanel, BorderLayout.CENTER);
+        searchPanel = new SearchPanel();
+        this.add(searchPanel, BorderLayout.NORTH);
 
         // Display the window
         this.setVisible(true);
