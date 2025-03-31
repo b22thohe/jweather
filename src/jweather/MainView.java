@@ -23,6 +23,7 @@ public class MainView extends JFrame {
         mainPanel = new MainPanel();
         this.add(mainPanel, BorderLayout.CENTER);
         searchPanel = new SearchPanel();
+
         this.add(searchPanel, BorderLayout.NORTH);
 
         // Display the window

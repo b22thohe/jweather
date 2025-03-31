@@ -7,7 +7,5 @@ public class Main {
         Controller controller = new Controller(gui, model);
 
         // Test run - output console
-        controller.getWeatherData();
-        controller.displayWeatherData();
     }
 }

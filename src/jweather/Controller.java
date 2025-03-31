@@ -2,6 +2,8 @@ package jweather;
 
 import org.json.JSONObject;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -13,6 +15,7 @@ public class Controller {
     private MainView gui;
     private Model model;
     private final String apiKey;
+    private String requestedCity;
     private String cityName;
     private double longitude;
     private double latitude;
@@ -31,12 +34,38 @@ public class Controller {
         this.gui = gui;
         this.model = model;
         apiKey  = model.loadApiKey();
+        requestedCity = new String();
+
+        // If SearchPanel exists, then attach action listener to search button
+        if (gui.searchPanel != null) {
+            setSearchActionListener();
+        }
     }
 
-    public void getWeatherData() {
+    private void setSearchActionListener() {
+        gui.searchPanel.getSearchButton().addActionListener(
+            new ActionListener() {
+
+                /**
+                 * Invoked when an action occurs.
+                 *
+                 * @param e the event to be processed
+                 */
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    requestedCity = gui.searchPanel.getSearchFieldText();
+                    System.out.println(requestedCity);
+                    getWeatherData(requestedCity);
+                    displayWeatherData();
+                }
+            }
+        );
+    }
+
+    public void getWeatherData(String city) {
         try {
             // Prepare the request URL
-            String url = BASE_URL + "Kumla" + "&appid=" + apiKey + "&units=metric";
+            String url = BASE_URL + city + "&appid=" + apiKey + "&units=metric";
             // Create a new Http client
             HttpClient client = HttpClient.newHttpClient();
             // Create the request
@@ -113,7 +142,10 @@ public class Controller {
     }
 
     public void displayWeatherData() {
+        gui.mainPanel.updateCityName(cityName);
         gui.mainPanel.updateLatitude(latitude);
         gui.mainPanel.updateLongitude(longitude);
+        gui.mainPanel.updateMainWeather(weatherMain);
+        gui.mainPanel.updateTemperatureLabel(temp, feelsLike, minTemp, maxTemp);
     }
 }
