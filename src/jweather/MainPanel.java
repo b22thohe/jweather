@@ -41,7 +41,7 @@ public class MainPanel extends JPanel {
         feelLike.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(feelLike, this, thisLayout, gbc, 1, 2,1,1);
         // WIND SPEED
-        windSpeed = new JLabel("Vindstyrka: XX Orkan");
+        windSpeed = new JLabel("Vindstyrka: Orkan");
         windSpeed.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(windSpeed, this, thisLayout, gbc, 0, 3,1,1);
         // LOWEST TEMPERATURE
@@ -76,7 +76,43 @@ public class MainPanel extends JPanel {
         container.add(component);
     }
 
-    public void updateCityName(String cityName) {
+    public void setWeatherPlaceholder(JLabel weatherPlaceholder) {
+        this.weatherPlaceholder = weatherPlaceholder;
+    }
+
+    public void setCityName(String cityName) {
         this.cityName.setText(cityName);
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature.setText(temperature + "°");
+    }
+
+    public void setFeelLike(int feelLike) {
+        this.feelLike.setText(feelLike + "°");
+    }
+
+    public void setWindSpeed(String windSpeed) {
+        this.windSpeed.setText("Vindstyrka: " + windSpeed);
+    }
+
+    public void setLowTemp(int lowTemp) {
+        this.lowTemp.setText(lowTemp + "°");
+    }
+
+    public void setHighTemp(int highTemp) {
+        this.highTemp.setText(highTemp + "°");
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity.setText(humidity + "%");
+    }
+
+    public void setWeatherMain(String weatherMain) {
+        this.weatherMain.setText(weatherMain);
+    }
+
+    public void setWeatherDescription(String weatherDescription) {
+        this.weatherDescription.setText("Just nu ser vi: " + weatherDescription);
     }
 }

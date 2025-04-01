@@ -77,7 +77,7 @@ public class Controller {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             // If request is ok...
             if (response.statusCode() == 200) {
-                // ...parse the response
+                // ...parse the response and store in appropriate variables
                 parseWeather(response.body());
             } else {
                 System.out.println("Error: Unable to fetch weather data. Check city name or API key.");
@@ -142,6 +142,14 @@ public class Controller {
     }
 
     public void displayWeatherData() {
-        gui.mainPanel.updateCityName(cityName);
+        gui.mainPanel.setCityName(cityName);
+        gui.mainPanel.setTemperature(temp);
+        gui.mainPanel.setFeelLike(feelsLike);
+        gui.mainPanel.setWindSpeed(windSpeedName);
+        gui.mainPanel.setLowTemp(minTemp);
+        gui.mainPanel.setHighTemp(maxTemp);
+        gui.mainPanel.setHumidity(humidity);
+        gui.mainPanel.setWeatherMain(weatherMain);
+        gui.mainPanel.setWeatherDescription(weatherDescription);
     }
 }
