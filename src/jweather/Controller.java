@@ -143,9 +143,5 @@ public class Controller {
 
     public void displayWeatherData() {
         gui.mainPanel.updateCityName(cityName);
-        gui.mainPanel.updateLatitude(latitude);
-        gui.mainPanel.updateLongitude(longitude);
-        gui.mainPanel.updateMainWeather(weatherMain);
-        gui.mainPanel.updateTemperatureLabel(temp, feelsLike, minTemp, maxTemp);
     }
 }

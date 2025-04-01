@@ -4,57 +4,79 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
+    private JLabel weatherPlaceholder;
     private JLabel cityName;
-    private JLabel longitudeDataLabel;
-    private JLabel latitudeDataLabel;
-    private JLabel mainWeatherDataLabel;
-    private JLabel detailedWeatherDataLabel;
-    private JLabel temperatureLabel;
+    private JLabel temperature;
+    private JLabel feelLike;
+    private JLabel windSpeed;
+    private JLabel lowTemp;
+    private JLabel highTemp;
+    private JLabel humidity;
+    private JLabel weatherMain;
+    private JLabel weatherDescription;
 
     // Constructor
     public MainPanel() {
-        // Create the panel
+        // Create the constraints for GridbagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        // Set a GridLayout for this panel
+        GridBagLayout thisLayout = new GridBagLayout();
+        this.setLayout(thisLayout);
+        // Create a panel border
         this.setBorder(BorderFactory.createTitledBorder("Weather data"));
+        // WEATHER ICON
+        ImageIcon weatherIcon = new ImageIcon(getClass().getResource("/images/yellow-sun-16526.png"));
+        weatherPlaceholder = new JLabel(weatherIcon);
+        addComponent(weatherPlaceholder, this, thisLayout, gbc,0,0,1,1);
+        // CITY NAME
         cityName = new JLabel("");
-        cityName.setFont(new Font("Tahoma", Font.PLAIN, 24));
-        this.add(cityName);
-        JLabel longitudeLabel = new JLabel("Longitude: ");
-        this.add(longitudeLabel);
-        longitudeDataLabel = new JLabel("XX.XXXX");
-        this.add(longitudeDataLabel);
-        JLabel latitudeLabel = new JLabel("Latitude: ");
-        this.add(latitudeLabel);
-        latitudeDataLabel = new JLabel("XX.XXXX");
-        this.add(latitudeDataLabel);
-        JLabel mainWeatherLabel = new JLabel("Vädret just nu: ");
-        this.add(mainWeatherLabel);
-        mainWeatherDataLabel = new JLabel("");
-        this.add(mainWeatherDataLabel);
-        temperatureLabel = new JLabel("");
-        this.add(temperatureLabel);
+        cityName.setFont(new Font("Tahoma", Font.BOLD, 24));
+        addComponent(cityName, this, thisLayout, gbc, 1, 0,1,1);
+        // TEMPERATURE
+        temperature = new JLabel("XX°");
+        temperature.setFont(new Font("Tahoma", Font.BOLD, 18));
+        addComponent(temperature, this, thisLayout, gbc, 1, 1,1,1);
+        // FEELS LIKE TEMPERATURE
+        feelLike = new JLabel("Känns som: XX°");
+        feelLike.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        addComponent(feelLike, this, thisLayout, gbc, 1, 2,1,1);
+        // WIND SPEED
+        windSpeed = new JLabel("Vindstyrka: XX Orkan");
+        windSpeed.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        addComponent(windSpeed, this, thisLayout, gbc, 0, 3,1,1);
+        // LOWEST TEMPERATURE
+        lowTemp = new JLabel("Lägsta temperatur: XX°");
+        lowTemp.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        addComponent(lowTemp, this, thisLayout, gbc, 1, 3,1,1);
+        // HUMIDITY
+        humidity = new JLabel("Luftfuktighet: XX%");
+        humidity.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        addComponent(humidity, this, thisLayout, gbc, 0, 4,1,1);
+        // HIGHEST TEMPERATURE
+        highTemp = new JLabel("Högsta temperatur: XX°");
+        highTemp.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        addComponent(highTemp, this, thisLayout, gbc, 1, 4,1,1);
+        // WEATHER TYPE
+        weatherMain = new JLabel("Molnigt");
+        weatherMain.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        addComponent(weatherMain, this, thisLayout, gbc, 0, 5,1,1);
+        // WEATHER DESCRIPTION
+        weatherDescription = new JLabel("Just nu ser vi: Uppsprickande moln");
+        weatherDescription.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        addComponent(weatherDescription, this, thisLayout, gbc, 1, 5,1,1);
+    }
+
+    public void addComponent(Component component, Container container, GridBagLayout layout, GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheight) {
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.gridwidth = gridwidth;
+        gbc.gridheight = gridheight;
+
+        layout.setConstraints(component, gbc);
+        container.add(component);
     }
 
     public void updateCityName(String cityName) {
         this.cityName.setText(cityName);
-    }
-
-    public void updateLongitude(double longitude) {
-        String longitudeText = String.valueOf(longitude);
-        longitudeDataLabel.setText(longitudeText);
-    }
-
-    public void updateLatitude(double latitude) {
-        String latitudeText = String.valueOf(latitude);
-        latitudeDataLabel.setText(latitudeText);
-    }
-
-    public void updateMainWeather(String mainWeather) {
-        mainWeatherDataLabel.setText(mainWeather);
-    }
-
-    public void updateTemperatureLabel(int temp, int feelsLike, int minTemp, int maxTemp) {
-        String temperatureText = "Det är just nu " + temp + " och det känns som " + feelsLike + ". Det senaste dygnet har" +
-                " den lägsta temperaturen varit " + minTemp + " och den högsta temperaturen har varit " + maxTemp + ".";
-        temperatureLabel.setText(temperatureText);
     }
 }
