@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 
 public class Controller {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -34,32 +35,33 @@ public class Controller {
         this.gui = gui;
         this.model = model;
         apiKey  = model.loadApiKey();
-        requestedCity = new String();
+        requestedCity = "";
 
-        // If SearchPanel exists, then attach action listener to search button
+        // If SearchPanel exists, then attach action listener to text field and search button
         if (gui.searchPanel != null) {
             setSearchActionListener();
         }
     }
 
     private void setSearchActionListener() {
-        gui.searchPanel.getSearchButton().addActionListener(
-            new ActionListener() {
+        ActionListener searchAction = new ActionListener() {
 
-                /**
-                 * Invoked when an action occurs.
-                 *
-                 * @param e the event to be processed
-                 */
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    requestedCity = gui.searchPanel.getSearchFieldText();
-                    System.out.println(requestedCity);
-                    getWeatherData(requestedCity);
-                    displayWeatherData();
-                }
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                requestedCity = gui.searchPanel.getSearchFieldText();
+                System.out.println(requestedCity);
+                getWeatherData(requestedCity);
+                displayWeatherData();
             }
-        );
+        };
+
+        gui.searchPanel.getSearchField().addActionListener(searchAction);
+        gui.searchPanel.getSearchButton().addActionListener(searchAction);
     }
 
     public void getWeatherData(String city) {
@@ -117,39 +119,45 @@ public class Controller {
 
     /**
      * Get the name of windSpeed value
-     * Read more: https://www.spc.noaa.gov/faq/tornado/beaufort.html
-     * @param windSpeed
+     * Read more: <a href="https://www.spc.noaa.gov/faq/tornado/beaufort.html">Windspeed scale</a>
+     * @param windSpeed integer value
      * @return String
      */
     private String getWindSpeedName(int windSpeed) {
-        if (windSpeed <= 0.2) {
-            return "Vindstilla";
-        } else if (windSpeed >= 0.3 && windSpeed <= 3.3) {
-            return "Svag vind";
-        } else if (windSpeed >= 3.4 && windSpeed <= 7.9) {
-            return "Måttlig vind";
-        } else if (windSpeed >= 8 && windSpeed <= 13.8) {
-            return "Frisk vind";
-        } else if (windSpeed >= 13.9 && windSpeed <= 24.4) {
-            return "Hård vind";
-        } else if (windSpeed >= 24.5 && windSpeed <= 32.6) {
+        if (windSpeed <= 0.51) {
+            return "Calm";
+        } else if (windSpeed >= 0.51 && windSpeed <= 1.54) {
+            return "Light Breeze";
+        } else if (windSpeed >= 1.54 && windSpeed <= 8.2) {
+            return "Moderate Breeze";
+        } else if (windSpeed >= 8.2 && windSpeed <= 13.9) {
+            return "Strong Breeze";
+        } else if (windSpeed >= 13.9 && windSpeed <= 20.6) {
+            return "Gale";
+        } else if (windSpeed >= 20.6 && windSpeed <= 28.3) {
             return "Storm";
-        } else if (windSpeed > 32.7) {
-            return "Orkan";
         } else {
             return "End of the world";
         }
     }
 
     public void displayWeatherData() {
-        gui.mainPanel.setCityName(cityName);
-        gui.mainPanel.setTemperature(temp);
-        gui.mainPanel.setFeelLike(feelsLike);
-        gui.mainPanel.setWindSpeed(windSpeedName);
-        gui.mainPanel.setLowTemp(minTemp);
-        gui.mainPanel.setHighTemp(maxTemp);
-        gui.mainPanel.setHumidity(humidity);
-        gui.mainPanel.setWeatherMain(weatherMain);
-        gui.mainPanel.setWeatherDescription(weatherDescription);
+        // Populate north panel
+        // date, city name
+        LocalDate today = LocalDate.now();
+        gui.northPanel.setDateLabel(String.valueOf(today));
+        gui.northPanel.setTownLabel(cityName);
+
+        // Populate center panel
+        // temperature, feels like temp, max temp and min temp
+        gui.centerPanel.setTempOutput(String.valueOf(temp));
+        gui.centerPanel.setFeelsLike(String.valueOf(feelsLike));
+        gui.centerPanel.setMaxTemp(String.valueOf(maxTemp));
+        gui.centerPanel.setMinTemp(String.valueOf(minTemp));
+
+        // Populate south panel
+        // wind speed, humidity
+        gui.southPanel.setWindLabelOutput(windSpeedName);
+        gui.southPanel.setHumidityLabelOutput(String.valueOf(humidity));
     }
 }

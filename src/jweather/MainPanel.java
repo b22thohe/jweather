@@ -2,6 +2,7 @@ package jweather;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class MainPanel extends JPanel {
     private JLabel weatherPlaceholder;
@@ -25,7 +26,7 @@ public class MainPanel extends JPanel {
         // Create a panel border
         this.setBorder(BorderFactory.createTitledBorder("Weather data"));
         // WEATHER ICON
-        ImageIcon weatherIcon = new ImageIcon(getClass().getResource("/images/yellow-sun-16526.png"));
+        ImageIcon weatherIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/yellow-sun-16526.png")));
         weatherPlaceholder = new JLabel(weatherIcon);
         addComponent(weatherPlaceholder, this, thisLayout, gbc,0,0,1,1);
         // CITY NAME
@@ -37,31 +38,31 @@ public class MainPanel extends JPanel {
         temperature.setFont(new Font("Tahoma", Font.BOLD, 18));
         addComponent(temperature, this, thisLayout, gbc, 1, 1,1,1);
         // FEELS LIKE TEMPERATURE
-        feelLike = new JLabel("Känns som: XX°");
+        feelLike = new JLabel("Feels like: XX°");
         feelLike.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(feelLike, this, thisLayout, gbc, 1, 2,1,1);
         // WIND SPEED
-        windSpeed = new JLabel("Vindstyrka: Orkan");
+        windSpeed = new JLabel("Wind: Hurricane");
         windSpeed.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(windSpeed, this, thisLayout, gbc, 0, 3,1,1);
         // LOWEST TEMPERATURE
-        lowTemp = new JLabel("Lägsta temperatur: XX°");
+        lowTemp = new JLabel("Lowest temperature: XX°");
         lowTemp.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(lowTemp, this, thisLayout, gbc, 1, 3,1,1);
         // HUMIDITY
-        humidity = new JLabel("Luftfuktighet: XX%");
+        humidity = new JLabel("Humidity: XX%");
         humidity.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(humidity, this, thisLayout, gbc, 0, 4,1,1);
         // HIGHEST TEMPERATURE
-        highTemp = new JLabel("Högsta temperatur: XX°");
+        highTemp = new JLabel("Highest temperature: XX°");
         highTemp.setFont(new Font("Tahoma", Font.PLAIN, 12));
         addComponent(highTemp, this, thisLayout, gbc, 1, 4,1,1);
         // WEATHER TYPE
-        weatherMain = new JLabel("Molnigt");
+        weatherMain = new JLabel("Cloudy");
         weatherMain.setFont(new Font("Tahoma", Font.PLAIN, 18));
         addComponent(weatherMain, this, thisLayout, gbc, 0, 5,1,1);
         // WEATHER DESCRIPTION
-        weatherDescription = new JLabel("Just nu ser vi: Uppsprickande moln");
+        weatherDescription = new JLabel("The weather right now: cloudy");
         weatherDescription.setFont(new Font("Tahoma", Font.PLAIN, 14));
         addComponent(weatherDescription, this, thisLayout, gbc, 1, 5,1,1);
     }
@@ -89,23 +90,23 @@ public class MainPanel extends JPanel {
     }
 
     public void setFeelLike(int feelLike) {
-        this.feelLike.setText(feelLike + "°");
+        this.feelLike.setText("Feels like:" + feelLike + "°");
     }
 
     public void setWindSpeed(String windSpeed) {
-        this.windSpeed.setText("Vindstyrka: " + windSpeed);
+        this.windSpeed.setText("Wind speed: " + windSpeed);
     }
 
     public void setLowTemp(int lowTemp) {
-        this.lowTemp.setText(lowTemp + "°");
+        this.lowTemp.setText("Lowest temperature:" + lowTemp + "°");
     }
 
     public void setHighTemp(int highTemp) {
-        this.highTemp.setText(highTemp + "°");
+        this.highTemp.setText("Highest temperature:" + highTemp + "°");
     }
 
     public void setHumidity(int humidity) {
-        this.humidity.setText(humidity + "%");
+        this.humidity.setText("Humidity:" + humidity + "%");
     }
 
     public void setWeatherMain(String weatherMain) {
@@ -113,6 +114,6 @@ public class MainPanel extends JPanel {
     }
 
     public void setWeatherDescription(String weatherDescription) {
-        this.weatherDescription.setText("Just nu ser vi: " + weatherDescription);
+        this.weatherDescription.setText("The weather right now: " + weatherDescription);
     }
 }

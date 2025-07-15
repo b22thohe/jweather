@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
-    MainPanel mainPanel;
-    SearchPanel searchPanel;
+    NorthPanel northPanel = new NorthPanel();
+    CenterPanel centerPanel = new CenterPanel();
+    SouthPanel southPanel = new SouthPanel();
+    SearchPanel searchPanel = new SearchPanel();
 
     // Constructor
     public MainView(String title) {
@@ -20,11 +22,13 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
 
         // Add panels to gui
-        mainPanel = new MainPanel();
-        this.add(mainPanel, BorderLayout.CENTER);
-        searchPanel = new SearchPanel();
+        this.add(northPanel, BorderLayout.NORTH);
 
-        this.add(searchPanel, BorderLayout.NORTH);
+        this.add(centerPanel, BorderLayout.CENTER);
+
+        this.add(southPanel, BorderLayout.SOUTH);
+
+        this.add(searchPanel, BorderLayout.EAST);
 
         // Display the window
         this.setVisible(true);
