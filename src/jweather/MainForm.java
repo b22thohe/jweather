@@ -21,4 +21,6 @@ public class MainForm {
     private JLabel humidityLabel;
     private JLabel windOutput;
     private JLabel humidityOutput;
+    private JLabel dateLabel;
+    private JLabel cityLabel;
 }
