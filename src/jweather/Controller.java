@@ -37,10 +37,8 @@ public class Controller {
         apiKey  = model.loadApiKey();
         requestedCity = "";
 
-        // If SearchPanel exists, then attach action listener to text field and search button
-        if (gui.searchPanel != null) {
-            setSearchActionListener();
-        }
+        setSearchActionListener();
+
     }
 
     private void setSearchActionListener() {
@@ -53,15 +51,15 @@ public class Controller {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                requestedCity = gui.searchPanel.getSearchFieldText();
+                requestedCity = gui.mainForm.getSearchFieldText();
                 System.out.println(requestedCity);
                 getWeatherData(requestedCity);
                 displayWeatherData();
             }
         };
 
-        gui.searchPanel.getSearchField().addActionListener(searchAction);
-        gui.searchPanel.getSearchButton().addActionListener(searchAction);
+        gui.mainForm.getSearchField().addActionListener(searchAction);
+        gui.mainForm.getSearchButton().addActionListener(searchAction);
     }
 
     public void getWeatherData(String city) {
@@ -145,19 +143,19 @@ public class Controller {
         // Populate north panel
         // date, city name
         LocalDate today = LocalDate.now();
-        gui.northPanel.setDateLabel(String.valueOf(today));
-        gui.northPanel.setTownLabel(cityName);
+        gui.mainForm.setDateLabel(String.valueOf(today));
+        gui.mainForm.setCityLabel(cityName);
 
         // Populate center panel
         // temperature, feels like temp, max temp and min temp
-        gui.centerPanel.setTempOutput(String.valueOf(temp));
-        gui.centerPanel.setFeelsLike(String.valueOf(feelsLike));
-        gui.centerPanel.setMaxTemp(String.valueOf(maxTemp));
-        gui.centerPanel.setMinTemp(String.valueOf(minTemp));
+        gui.mainForm.setTempOutput(String.valueOf(temp));
+        gui.mainForm.setFeelsLike(String.valueOf(feelsLike));
+        gui.mainForm.setMaxTemp(String.valueOf(maxTemp));
+        gui.mainForm.setMinTemp(String.valueOf(minTemp));
 
         // Populate south panel
         // wind speed, humidity
-        gui.southPanel.setWindLabelOutput(windSpeedName);
-        gui.southPanel.setHumidityLabelOutput(String.valueOf(humidity));
+        gui.mainForm.setWindLabelOutput(windSpeedName);
+        gui.mainForm.setHumidityLabelOutput(String.valueOf(humidity));
     }
 }

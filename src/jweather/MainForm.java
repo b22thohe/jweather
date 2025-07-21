@@ -1,11 +1,12 @@
 package jweather;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
-public class MainForm {
+public class MainForm extends JPanel {
     private JPanel mainPanel;
     private JPanel topPanel;
-    private JTextField searchInput;
+    private JTextField searchField;
     private JButton searchButton;
     private JPanel bottomPanel;
     private JLabel searchLabel;
@@ -23,4 +24,57 @@ public class MainForm {
     private JLabel humidityOutput;
     private JLabel dateLabel;
     private JLabel cityLabel;
+
+    public MainForm() {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/messages");
+        dateLabel.setText(bundle.getString("date_label"));
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public String getSearchFieldText() {
+        return searchField.getText();
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public void setDateLabel(String date) {
+        dateLabel.setText(date);
+    }
+
+    public void setCityLabel(String townName) {
+        cityLabel.setText(townName);
+    }
+
+    public void setTempOutput(String temp) {
+        this.tempOutput.setText(temp);
+    }
+
+    public void setMaxTemp(String maxTemp) {
+        this.maxTempOutput.setText(maxTemp);
+    }
+
+    public void setFeelsLike(String feelsLike) {
+        this.feelsLikeOutput.setText(feelsLike);
+    }
+
+    public void setMinTemp(String minTemp) {
+        this.minTempOutput.setText(minTemp);
+    }
+
+    public void setWindLabelOutput(String windSpeed) {
+        this.windOutput.setText(windSpeed);
+    }
+
+    public void setHumidityLabelOutput(String humidity) {
+        this.humidityOutput.setText(humidity);
+    }
 }
