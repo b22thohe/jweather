@@ -1,6 +1,7 @@
 package jweather;
 
 import javax.swing.*;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainForm extends JPanel {
@@ -24,6 +25,7 @@ public class MainForm extends JPanel {
     private JLabel humidityOutput;
     private JLabel dateLabel;
     private JLabel cityLabel;
+    private JLabel weatherImageLabel;
 
     public MainForm() {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/messages");
@@ -76,5 +78,10 @@ public class MainForm extends JPanel {
 
     public void setHumidityLabelOutput(String humidity) {
         this.humidityOutput.setText(humidity);
+    }
+
+    public void setWeatherImageLabel(URL weatherIcon) {
+        ImageIcon icon = new ImageIcon(weatherIcon);
+        this.weatherImageLabel.setIcon(icon);
     }
 }

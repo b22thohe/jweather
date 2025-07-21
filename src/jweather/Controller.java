@@ -2,10 +2,13 @@ package jweather;
 
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -22,6 +25,7 @@ public class Controller {
     private double latitude;
     private String weatherMain;
     private String weatherDescription;
+    private String weatherIcon;
     private int temp;
     private int feelsLike;
     private int minTemp;
@@ -54,7 +58,11 @@ public class Controller {
                 requestedCity = gui.mainForm.getSearchFieldText();
                 System.out.println(requestedCity);
                 getWeatherData(requestedCity);
-                displayWeatherData();
+                try {
+                    displayWeatherData();
+                } catch (MalformedURLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         };
 
@@ -102,6 +110,7 @@ public class Controller {
         latitude = coord.getDouble("lat");
         weatherMain = json.getJSONArray("weather").getJSONObject(0).getString("main");
         weatherDescription = json.getJSONArray("weather").getJSONObject(0).getString("description");
+        weatherIcon = json.getJSONArray("weather").getJSONObject(0).getString("icon");
         JSONObject main = json.getJSONObject("main");
         temp = (int) Math.round(main.getDouble("temp"));
         feelsLike = (int) Math.round(main.getDouble("feels_like"));
@@ -139,23 +148,31 @@ public class Controller {
         }
     }
 
-    public void displayWeatherData() {
-        // Populate north panel
-        // date, city name
-        LocalDate today = LocalDate.now();
-        gui.mainForm.setDateLabel(String.valueOf(today));
-        gui.mainForm.setCityLabel(cityName);
+    public void displayWeatherData() throws MalformedURLException {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                // Set all the labels
+                LocalDate today = LocalDate.now();
+                gui.mainForm.setDateLabel(String.valueOf(today));
+                gui.mainForm.setCityLabel(cityName);
+                gui.mainForm.setTempOutput(String.valueOf(temp));
+                gui.mainForm.setFeelsLike(String.valueOf(feelsLike));
+                gui.mainForm.setMaxTemp(String.valueOf(maxTemp));
+                gui.mainForm.setMinTemp(String.valueOf(minTemp));
+                gui.mainForm.setWindLabelOutput(windSpeedName);
+                gui.mainForm.setHumidityLabelOutput(String.valueOf(humidity));
 
-        // Populate center panel
-        // temperature, feels like temp, max temp and min temp
-        gui.mainForm.setTempOutput(String.valueOf(temp));
-        gui.mainForm.setFeelsLike(String.valueOf(feelsLike));
-        gui.mainForm.setMaxTemp(String.valueOf(maxTemp));
-        gui.mainForm.setMinTemp(String.valueOf(minTemp));
+                // Set icon
+                URL iconUrl = getWeatherIconUrl(weatherIcon);
+                gui.mainForm.setWeatherImageLabel(iconUrl);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-        // Populate south panel
-        // wind speed, humidity
-        gui.mainForm.setWindLabelOutput(windSpeedName);
-        gui.mainForm.setHumidityLabelOutput(String.valueOf(humidity));
+    private URL getWeatherIconUrl(String weatherIcon) throws MalformedURLException {
+        String urlString = "https://openweathermap.org/img/wn/" + weatherIcon + "@4x.png";
+        return new URL(urlString);
     }
 }
