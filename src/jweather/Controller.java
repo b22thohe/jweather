@@ -16,8 +16,8 @@ import java.time.LocalDate;
 
 public class Controller {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
-    private MainView gui;
-    private Model model;
+    private final MainView gui;
+    private final Model model;
     private final String apiKey;
     private String requestedCity;
     private String cityName;
