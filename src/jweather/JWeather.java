@@ -11,9 +11,10 @@ import java.util.Properties;
 import java.util.Scanner;
 import org.json.JSONObject;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class JWeather {
     private static final String API_KEY = loadApiKey();
-    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
+    private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
     private static final String CONFIG_FILE = "src/jweather/config.properties";
 
     public static void main(String[] args) {

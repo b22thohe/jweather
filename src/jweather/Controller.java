@@ -15,7 +15,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 
 public class Controller {
-    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
+    private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
     private MainView gui;
     private Model model;
     private final String apiKey;
@@ -105,7 +105,7 @@ public class Controller {
 
         // Extract all useful data
         cityName = json.getString("name");
-        JSONObject coord = json.getJSONObject("coord");
+        @SuppressWarnings("SpellCheckingInspection") JSONObject coord = json.getJSONObject("coord");
         longitude = coord.getDouble("lon");
         latitude = coord.getDouble("lat");
         weatherMain = json.getJSONArray("weather").getJSONObject(0).getString("main");
@@ -126,7 +126,7 @@ public class Controller {
 
     /**
      * Get the name of windSpeed value
-     * Read more: <a href="https://www.spc.noaa.gov/faq/tornado/beaufort.html">Windspeed scale</a>
+     * Read more: <a href="https://www.spc.noaa.gov/faq/tornado/beaufort.html">Wind speed scale</a>
      * @param windSpeed integer value
      * @return String
      */
