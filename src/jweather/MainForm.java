@@ -29,7 +29,16 @@ public class MainForm extends JPanel {
 
     public MainForm() {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/messages");
+        searchLabel.setText(bundle.getString("search_label"));
+        searchButton.setText(bundle.getString("search_button"));
         dateLabel.setText(bundle.getString("date_label"));
+        cityLabel.setText(bundle.getString("city_label"));
+        tempLabel.setText(bundle.getString("temp_label"));
+        feelsLikeLabel.setText(bundle.getString("feels_like_label"));
+        minTempLabel.setText(bundle.getString("min_temp_label"));
+        maxTempLabel.setText(bundle.getString("max_temp_label"));
+        windLabel.setText(bundle.getString("wind_label"));
+        humidityLabel.setText(bundle.getString("humidity_label"));
     }
 
     public JPanel getMainPanel() {
